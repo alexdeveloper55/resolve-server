@@ -1,0 +1,14 @@
+# Dependency directory
+node_modules/
+
+# Environment file
+.env
+
+# Build directory
+dist/
+
+#SQLite database
+data/
+
+# Local setup
+.vscode/
