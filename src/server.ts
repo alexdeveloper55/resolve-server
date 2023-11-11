@@ -5,15 +5,19 @@ import { parseProperties } from "./controllers/entityController"
 
 dotenv.config()
 
+const PORT: number = parseInt(process.env.PORT as string, 10) || 4000
+const dbUrl = process.env.DATABASE_URL
+
+const cors = require("cors")
 const app = express()
-const PORT: number = parseInt(process.env.PORT as string, 10) || 3000
-const dbUrl = "https://resolve-dev-public.s3.amazonaws.com/sample-data/interview/props.db"
+
+app.use(cors())
 
 async function ensureDatabase(_req: Request, res: Response, next: NextFunction) {
   try {
     if (!checkDatabaseFileExists(dbFilePath)) {
       console.log("Database file not found. Downloading now...")
-      await downloadDatabaseFile(process.env.DATABASE_URL || dbUrl, dbFilePath)
+      await downloadDatabaseFile(dbUrl as string, dbFilePath)
     }
     next()
   } catch (error) {
